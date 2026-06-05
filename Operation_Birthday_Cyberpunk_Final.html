@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation Birthday Chaos - Houssain</title>
+
+<style>
+body{
+ margin:0;
+ background:#050814;
+ color:#dff2ff;
+ font-family:Consolas,monospace;
+ overflow-x:hidden;
+}
+
+canvas{position:fixed;inset:0;z-index:-2}
+
+/* floating particles canvas overlay */
+#particles{position:fixed;inset:0;z-index:-1}
+
+.container{max-width:1000px;margin:auto;padding:20px}
+
+.card{
+ background:rgba(10,20,50,.75);
+ border:1px solid #3aa0ff;
+ border-radius:14px;
+ padding:20px;
+ margin:20px 0;
+ box-shadow:0 0 20px rgba(58,160,255,.25);
+}
+
+button{
+ background:#1a57c9;
+ color:white;
+ border:none;
+ padding:12px 18px;
+ border-radius:10px;
+ cursor:pointer;
+ margin:6px;
+ transition:.2s;
+}
+
+button:hover{transform:scale(1.05)}
+
+.hidden{display:none}
+
+.glitch{
+ font-size:2.4rem;
+ text-align:center;
+ animation:gl 1.2s infinite;
+}
+
+@keyframes gl{
+0%,100%{text-shadow:2px 0 #00f,-2px 0 #f0f}
+50%{text-shadow:-2px 0 #0ff,2px 0 #f0f}
+}
+
+/* AI BOX MOVING */
+#ai{
+ position:fixed;
+ top:20px;
+ right:20px;
+ width:260px;
+ background:#061a33;
+ border:1px solid #4aa3ff;
+ padding:12px;
+ border-radius:12px;
+ box-shadow:0 0 15px #1f6fff;
+ animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+
+.achievement{
+ position:fixed;
+ bottom:20px;
+ right:20px;
+ background:#06244a;
+ padding:12px;
+ border-radius:10px;
+ display:none;
+ border:1px solid #6fb6ff;
+}
+
+.final{
+ font-size:1.3rem;
+ line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+<canvas id="fx"></canvas>
+
+<div id="ai">
+<b>KHAWLA❤️</b>
+<hr>
+<span id="aitext">Booting personality module...</span>
+</div>
+
+<div class="achievement" id="ach"></div>
+
+<div class="container">
+
+<div class="card">
+<div class="glitch">BIRTHDAY CHAOS SYSTEM</div>
+<p id="boot"></p>
+<button onclick="enter()">ENTER THE EXPERIENCE</button>
+</div>
+
+<div id="vault" class="hidden">
+
+<div class="card">
+<h2>SUBJECT ANALYSIS REPORT</h2>
+<p><b>Subject:</b> Houssain</p>
+<p>Curiosity ██████████ 99%</p>
+<p>Sleep Schedule: NOT FOUND</p>
+<p>Ability To Stay Out Of Trouble: ERROR</p>
+<p>Friendliness: Dangerously High</p>
+<p>Common Habitat: Somewhere causing trouble.</p>
+</div>
+
+<div class="card">
+<h2>Random Truth Generator</h2>
+<button onclick="truth()">Reveal Truth</button>
+<p id="truth"></p>
+</div>
+
+<div class="card">
+<h2>Secret Files</h2>
+
+<button onclick="openFile('sad')">Open when sad</button>
+<button onclick="openFile('bored')">Open when bored</button>
+<button onclick="openFile('wonder')">Open when thinking too much</button>
+
+<p id="sad" class="hidden">You have survived 100% of your bad days so far. Impressive statistics.</p>
+<p id="bored" class="hidden">Go explore something. Boredom looks suspicious on you.</p>
+<p id="wonder" class="hidden">People probably remember you more than you think.</p>
+</div>
+
+<div class="card">
+<h2>🔐 Classified Intelligence File</h2>
+<button onclick="intel()">Access File</button>
+<p id="intel"></p>
+</div>
+
+<div class="card">
+<h2>🚨 Totally Secure Security System 🚨</h2>
+<button onclick="breach()">Run Security Check</button>
+</div>
+
+<div class="card">
+<h2>Final Button</h2>
+<button style="background:#b30000" onclick="finale()">DO NOT PRESS</button>
+</div>
+
+<div id="final" class="card hidden final"></div>
+
+</div>
+
+<script>
+
+/* BOOT */
+const boot=`INITIALIZING...
+Loading Birthday Universe...
+Injecting Chaos...
+ERROR: 
+Too much personality detected...
+Too much chaos detected.`;
+
+let i=0;
+(function t(){
+ if(i<boot.length){
+  document.getElementById("boot").textContent+=boot[i++];
+  setTimeout(t,25);
+ }
+})();
+
+/* ENTER */
+function enter(){
+ document.getElementById("vault").classList.remove("hidden");
+ ai("Welcome Houssain. Please avoid pressing suspicious buttons. Actually... that's impossible.");
+ ach("🏆 First Contact");
+}
+
+/* AI */
+function ai(m){
+ document.getElementById("aitext").innerText=m;
+}
+
+/* ACH */
+function ach(m){
+ let a=document.getElementById("ach");
+ a.innerText=m;
+ a.style.display="block";
+ setTimeout(()=>a.style.display="none",2500);
+}
+
+/* TRUTH */
+const truths=[
+"You definitely clicked this immediately.",
+"Your curiosity is scientifically abnormal.",
+"Somewhere, a warning label is crying.",
+"You turn instructions into suggestions.",
+"Chaos follows you politely.",
+"Scientists are studying your ability to find trouble.",
+"You read 'DO NOT PRESS' as a challenge.",
+"If curiosity were a job, you'd be rich.",
+"Somewhere a warning label is crying because of you.",
+"You definitely clicked this immediately."
+];
+
+function truth(){
+ document.getElementById("truth").innerText=
+ truths[Math.floor(Math.random()*truths.length)];
+ ai("Interesting. Gathering more evidence against you.");
+}
+
+/* FILES */
+function openFile(id){
+ document.getElementById(id).classList.toggle("hidden");
+ ai("Human emotions detected. Interesting.");
+ if(opened===3) achievement("🏆 Certified Curious Person");
+}
+
+/* INTEL FILE (replaces easter egg) */
+function intel(){
+ document.getElementById("intel").innerText=
+ "After deep analysis...\nHoussain is not a normal user.\nConclusion: keep him anyway.";
+ ach("🏆 Classified Truth Revealed");
+ ai("File accessed. consequences unknown.");
+}
+
+function breach(){
+ document.body.classList.add("flash");
+ setTimeout(()=>document.body.classList.remove("flash"),1500);
+ ai("SECURITY BREACH DETECTED... Never mind. It was just Houssain again.");
+ achievement("🏆 Security Risk");
+}
+
+/* FINAL */
+function finale(){
+ let f=document.getElementById("final");
+ f.classList.remove("hidden");
+ launchFireworks();
+
+ f.innerHTML=`
+ <h2>MISSION FAILED</h2>
+ <p>...</p>
+ <h2>MISSION FAILED SUCCESSFULLY</h2>
+ <p>Searching birthday database...</p>
+ <p>No standard birthday message found.</p>
+ <p>Reason: Subject is not standard.</p>
+ <h1>🎉 HAPPY BIRTHDAY HOUSSAIN 🎉</h1>
+ <p>To my unique man 💙</p>
+ <p>I haven't known you for very long, but some people don't need much time to leave a strong impression.</p>
+ <p>Stay adventurous.<br>Stay funny.<br>Stay wonderfully chaotic.</p>
+ <p>Thank you for being exactly who you are.</p>
+ <p><b>SYSTEM RECOMMENDATION:</b><br>Eat cake.<br>Cause reasonable amounts of trouble.<br>Have a great birthday.</p>
+ <h2>⚠️ Rah 3andek khdma gheda sir tn3ess ⚠️</h2>
+ <p>— Khawla 💙</p>`;
+  achievement("🏆 Exactly Why Warning Labels Exist");
+ ai("You pressed it. Of course you did.");
+}
+
+/* PARTICLES (RAINBOW LIGHTS) */
+const c=document.getElementById("bg");
+const x=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+
+let dots=[];
+const colors=["#ff4d6d","#ffd166","#06d6a0","#4cc9f0","#b517ff","#ffffff"];
+
+for(let i=0;i<120;i++){
+ dots.push({
+  x:Math.random()*c.width,
+  y:Math.random()*c.height,
+  r:Math.random()*3+1,
+  c:colors[Math.floor(Math.random()*colors.length)],
+  v:Math.random()*1.5+0.5
+ });
+}
+
+function draw(){
+ x.fillStyle="rgba(5,8,20,0.25)";
+ x.fillRect(0,0,c.width,c.height);
+
+ dots.forEach(d=>{
+  x.fillStyle=d.c;
+  x.beginPath();
+  x.arc(d.x,d.y,d.r,0,Math.PI*2);
+  x.fill();
+  d.y+=d.v;
+  if(d.y>c.height){d.y=0;d.x=Math.random()*c.width;}
+ });
+
+ requestAnimationFrame(draw);
+}
+draw();
+
+/* FIREWORKS */
+const fx=document.getElementById("fx");
+const f=fx.getContext("2d");
+fx.width=innerWidth;fx.height=innerHeight;
+
+let sparks=[];
+
+function launchFireworks(){
+ for(let i=0;i<150;i++){
+  sparks.push({
+   x:fx.width/2,
+   y:fx.height/2,
+   vx:(Math.random()-0.5)*8,
+   vy:(Math.random()-0.5)*8,
+   life:100,
+   c:colors[Math.floor(Math.random()*colors.length)]
+  });
+ }
+ animateFX();
+}
+
+function animateFX(){
+ f.clearRect(0,0,fx.width,fx.height);
+
+ sparks.forEach(s=>{
+  f.fillStyle=s.c;
+  f.fillRect(s.x,s.y,3,3);
+  s.x+=s.vx;
+  s.y+=s.vy;
+  s.life--;
+ });
+
+ sparks=sparks.filter(s=>s.life>0);
+
+ if(sparks.length>0) requestAnimationFrame(animateFX);
+}
+
+const comments=[
+"Curiosity level increasing...",
+"Houssain is still awake. Concerning.",
+"Analyzing chaos...",
+"System suspects birthday energy.",
+"Recommendation: More cake."
+];
+
+setInterval(()=>ai("Khawla observing..."),8000);
+
+</script>
+
+</body>
+</html>
